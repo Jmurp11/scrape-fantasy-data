@@ -102,7 +102,6 @@ export const teProjections = () => {
                 };
                 teArray.push(teProjections);
             }
-            console.log(teArray.length);
         }
     });
 }
