@@ -1,0 +1,27 @@
+{
+  "name": "scrape-fantasy-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r esm src/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jmurp11/scrape-fantasy-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jmurp11/scrape-fantasy-data/issues"
+  },
+  "homepage": "https://github.com/Jmurp11/scrape-fantasy-data#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "cheerio-tableparser": "^1.0.1",
+    "esm": "^3.2.25",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
