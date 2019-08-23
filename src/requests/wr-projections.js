@@ -125,7 +125,7 @@ export const wrProjections = () => {
                     receivingTd: recTdArray[i],
                     fantasyPoints: fantasyPointsArray[i]
                 };
-                const response = await request(getHost(), addProjection(
+                await request(getHost(), addProjection(
                     wr.firstName,
                     wr.lastName,
                     wr.team,
@@ -143,8 +143,6 @@ export const wrProjections = () => {
                     wr.receivingTd,
                     wr.fantasyPoints
                 )).catch(e => { console.error(e)});
-
-                return response;
             }
         }
     });

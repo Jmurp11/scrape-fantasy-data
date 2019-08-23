@@ -127,7 +127,7 @@ export const rbProjections = () => {
                     fantasyPoints: fantasyPointsArray[i]
                 };
 
-                const response = await request(getHost(), addProjection(
+                await request(getHost(), addProjection(
                     rb.firstName,
                     rb.lastName,
                     rb.team,
@@ -145,8 +145,6 @@ export const rbProjections = () => {
                     rb.receivingTd,
                     rb.fantasyPoints
                 )).catch(e => { console.error(e)});
-
-                return response;
             }
         }
     });

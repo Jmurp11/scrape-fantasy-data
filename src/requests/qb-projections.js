@@ -145,7 +145,7 @@ export const qbProjections = () => {
                     fantasyPoints: fantasyPointsArray[i]
                 };
     
-                const response = await request(getHost(), addProjection(
+                await request(getHost(), addProjection(
                     qb.firstName,
                     qb.lastName,
                     qb.team,
@@ -162,9 +162,7 @@ export const qbProjections = () => {
                     qb.receivingYards,
                     qb.receivingTd,
                     qb.fantasyPoints
-                )) .catch(e => { console.error(e)});
-
-                return response;
+                )).catch(e => { console.error(e)});
             }
         }
     });

@@ -1,8 +1,8 @@
-import { rankings, qbProjections, /* rbProjections, wrProjections, teProjections,*/ teams } from './requests';
+import { rankings, qbProjections, rbProjections, wrProjections, teProjections, teams } from './requests';
 
-teams();
-rankings();
-qbProjections();
-rbProjections();
-wrProjections();
+//teams();
+//rankings();
+//qbProjections();
+//rbProjections();
+//wrProjections();
 teProjections();

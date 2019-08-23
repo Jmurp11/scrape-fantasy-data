@@ -100,7 +100,7 @@ export const teProjections = () => {
                     receivingTd: recTdArray[i],
                     fantasyPoints: fantasyPointsArray[i]
                 };
-                const response = await request(getHost(), addProjection(
+                await request(getHost(), addProjection(
                     te.firstName,
                     te.lastName,
                     te.team,

@@ -25,7 +25,9 @@ export const rankings = () => {
                 const fullName = name.substring(name.indexOf('"') + 1, name.length);
                 let firstName = fullName.substring(0, fullName.indexOf(' '));
                 firstName = firstName.replace('&apos;', `'`);
-                const lastName = fullName.substring(fullName.indexOf(' '), fullName.length);
+                firstName = firstName.replace(' ', '');
+                let lastName = fullName.substring(fullName.indexOf(' '), fullName.length);
+                lastName = lastName.replace(' ', '');
                 const positionParsed = string.substring(string.indexOf('data-position="'), string.lastIndexOf('"'));
                 const teamParsed = string.substring(string.indexOf('data-team="'), string.indexOf('" data-position='));
 
@@ -38,7 +40,7 @@ export const rankings = () => {
                     position,
                     team
                 };
-
+                console.log(`${player.firstName}${player.lastName}`);
                 if (player.firstName.length > 0) {
                     playerInfoArr.push(player);
                 }
