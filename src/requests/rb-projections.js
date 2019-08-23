@@ -1,6 +1,7 @@
-const request = require('request');
-const cheerio = require('cheerio');
-const tableParser = require('cheerio-tableparser');
+import { request } from 'graphql-request';
+import { scrapeRequest, cheerio, tableParser, getHost } from '../constants';
+import { addProjection } from '../queries';
+
 
 const options = {
     url: 'https://www.fantasypros.com/nfl/projections/rb.php?scoring=HALF&week=draft'
@@ -17,7 +18,7 @@ var recTdArray = [];
 var fumblesArray = [];
 var fantasyPointsArray = [];
 export const rbProjections = () => {
-    request(options.url, (error, response, html) => {
+    scrapeRequest(options.url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
             let $ = cheerio.load(html);
 
@@ -107,7 +108,7 @@ export const rbProjections = () => {
             fantasyPointsArray.shift();
 
             for (let i = 0; i < rbInfoArray.length; i++) {
-                const rbProjections = {
+                const rb = {
                     firstName: rbInfoArray[i].firstName,
                     lastName: rbInfoArray[i].lastName,
                     team: rbInfoArray[i].team,
@@ -115,20 +116,38 @@ export const rbProjections = () => {
                     completions: 0,
                     passYards: 0,
                     passTd: 0,
-                    int: 0,
+                    interception: 0,
                     carries: attemptsArray[i],
                     rushYards: rushYardsArray[i],
                     rushTd: rushTdArray[i],
                     fumbles: fumblesArray[i],
                     receptions: receptionsArray[i],
                     receivingYards: recYardsArray[i],
-                    receivingTds: recTdArray[i],
+                    receivingTd: recTdArray[i],
                     fantasyPoints: fantasyPointsArray[i]
                 };
-    
-                rbArray.push(rbProjections);
+
+                const response = await request(getHost(), addProjection(
+                    rb.firstName,
+                    rb.lastName,
+                    rb.team,
+                    rb.completions,
+                    rb.attempts,
+                    rb.passTd,
+                    rb.passYards,
+                    rb.interception,
+                    rb.carries,
+                    rb.rushYards,
+                    rb.rushTd,
+                    rb.fumbles,
+                    rb.receptions,
+                    rb.receivingYards,
+                    rb.receivingTd,
+                    rb.fantasyPoints
+                )).catch(e => { console.error(e)});
+
+                return response;
             }
-            console.log(rbArray.length);
         }
     });
 }

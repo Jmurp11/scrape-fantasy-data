@@ -1,6 +1,6 @@
-const request = require('request');
-const cheerio = require('cheerio');
-const tableParser = require('cheerio-tableparser');
+import { request } from 'graphql-request';
+import { scrapeRequest, cheerio, tableParser, getHost } from '../constants';
+import { addProjection } from '../queries';
 
 const options = {
     url: 'https://www.fantasypros.com/nfl/projections/wr.php?scoring=HALF&week=draft'
@@ -17,7 +17,7 @@ var recTdArray = [];
 var fumblesArray = [];
 var fantasyPointsArray = [];
 export const wrProjections = () => {
-    request(options.url, (error, response, html) => {
+    scrapeRequest(options.url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
             let $ = cheerio.load(html);
 
@@ -107,7 +107,7 @@ export const wrProjections = () => {
             fantasyPointsArray.shift();
 
             for (let i = 0; i < wrInfoArray.length; i++) {
-                const wrProjections = {
+                const wr = {
                     firstName: wrInfoArray[i].firstName,
                     lastName: wrInfoArray[i].lastName,
                     team: wrInfoArray[i].team,
@@ -115,20 +115,38 @@ export const wrProjections = () => {
                     completions: 0,
                     passYards: 0,
                     passTd: 0,
-                    int: 0,
+                    interception: 0,
                     carries: attemptsArray[i],
                     rushYards: rushYardsArray[i],
                     rushTd: rushTdArray[i],
                     fumbles: fumblesArray[i],
                     receptions: receptionsArray[i],
                     receivingYards: recYardsArray[i],
-                    receivingTds: recTdArray[i],
+                    receivingTd: recTdArray[i],
                     fantasyPoints: fantasyPointsArray[i]
                 };
-                wrArray.push(wrProjections);
+                const response = await request(getHost(), addProjection(
+                    wr.firstName,
+                    wr.lastName,
+                    wr.team,
+                    wr.completions,
+                    wr.attempts,
+                    wr.passTd,
+                    wr.passYards,
+                    wr.interception,
+                    wr.carries,
+                    wr.rushYards,
+                    wr.rushTd,
+                    wr.fumbles,
+                    wr.receptions,
+                    wr.receivingYards,
+                    wr.receivingTd,
+                    wr.fantasyPoints
+                )).catch(e => { console.error(e)});
+
+                return response;
             }
         }
-        console.log(wrArray.length);
     });
 }
 

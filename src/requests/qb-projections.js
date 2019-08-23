@@ -1,6 +1,6 @@
-const request = require('request');
-const cheerio = require('cheerio');
-const tableParser = require('cheerio-tableparser');
+import { request } from 'graphql-request';
+import { scrapeRequest, cheerio, tableParser, getHost } from '../constants';
+import { addProjection } from '../queries';
 
 const options = {
     url: 'https://www.fantasypros.com/nfl/projections/qb.php?week=draft'
@@ -20,7 +20,7 @@ var fumblesArray = [];
 var fantasyPointsArray = [];
 
 export const qbProjections = () => {
-    request(options.url, (error, response, html) => {
+    scrapeRequest(options.url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
             let $ = cheerio.load(html);
 
@@ -134,20 +134,38 @@ export const qbProjections = () => {
                     completions: completionsArray[i],
                     passYards: passYardsArray[i],
                     passTd: passTdArray[i],
-                    int: intArray[i],
+                    interception: intArray[i],
                     carries: rushAttArray[i],
                     rushYards: rushYardsArray[i],
                     rushTd: rushTdArray[i],
                     fumbles: fumblesArray[i],
                     receptions: 0,
                     receivingYards: 0,
-                    receivingTds: 0,
+                    receivingTd: 0,
                     fantasyPoints: fantasyPointsArray[i]
                 };
     
-                qbArray.push(qb);
+                const response = await request(getHost(), addProjection(
+                    qb.firstName,
+                    qb.lastName,
+                    qb.team,
+                    qb.completions,
+                    qb.attempts,
+                    qb.passTd,
+                    qb.passYards,
+                    qb.interception,
+                    qb.carries,
+                    qb.rushYards,
+                    qb.rushTd,
+                    qb.fumbles,
+                    qb.receptions,
+                    qb.receivingYards,
+                    qb.receivingTd,
+                    qb.fantasyPoints
+                )) .catch(e => { console.error(e)});
+
+                return response;
             }
-            console.log(qbArray.length);
         }
     });
 }

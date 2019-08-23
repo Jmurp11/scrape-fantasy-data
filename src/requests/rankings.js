@@ -1,6 +1,6 @@
-const request = require('request');
-const cheerio = require('cheerio');
-const tableParser = require('cheerio-tableparser');
+import { request } from 'graphql-request';
+import { scrapeRequest, cheerio, tableParser, getHost } from '../constants';
+import { createPlayer } from '../queries';
 
 const options = {
     url: 'https://www.fantasypros.com/nfl/rankings/half-point-ppr-cheatsheets.php'
@@ -11,7 +11,7 @@ var rankArr = [];
 var players = [];
 
 export const rankings = () => {
-    request(options.url, (error, response, html) => {
+    scrapeRequest(options.url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
             let $ = cheerio.load(html);
 
@@ -73,9 +73,14 @@ export const rankings = () => {
                 rank: rankArr[i].rank,
                 tier: rankArr[i].tier
             };
-
-            players.push(player);
+            await request(getHost(), createPlayer(
+                player.firstName,
+                player.lastName,
+                player.team,
+                player.position,
+                player.rank,
+                player.tier
+            )).catch(e => { console.error(e)});
         }
-        console.log(players.length);
     });
 }

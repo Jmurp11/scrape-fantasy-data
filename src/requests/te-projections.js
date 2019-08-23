@@ -1,6 +1,6 @@
-const request = require('request');
-const cheerio = require('cheerio');
-const tableParser = require('cheerio-tableparser');
+import { request } from 'graphql-request';
+import { scrapeRequest, cheerio, tableParser, getHost } from '../constants';
+import { addProjection } from '../queries';
 
 const options = {
     url: 'https://www.fantasypros.com/nfl/projections/te.php?scoring=HALF&week=draft'
@@ -14,7 +14,7 @@ var recTdArray = [];
 var fumblesArray = [];
 var fantasyPointsArray = [];
 export const teProjections = () => {
-    request(options.url, (error, response, html) => {
+    scrapeRequest(options.url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
             let $ = cheerio.load(html);
 
@@ -82,7 +82,7 @@ export const teProjections = () => {
             fantasyPointsArray.shift();
 
             for (let i = 0; i < teInfoArray.length; i++) {
-                const teProjections = {
+                const te = {
                     firstName: teInfoArray[i].firstName,
                     lastName: teInfoArray[i].lastName,
                     team: teInfoArray[i].team,
@@ -90,17 +90,34 @@ export const teProjections = () => {
                     completions: 0,
                     passYards: 0,
                     passTd: 0,
-                    int: 0,
+                    interception: 0,
                     carries: 0,
                     rushYards: 0,
                     rushTd: 0,
                     fumbles: fumblesArray[i],
                     receptions: receptionsArray[i],
                     receivingYards: recYardsArray[i],
-                    receivingTds: recTdArray[i],
+                    receivingTd: recTdArray[i],
                     fantasyPoints: fantasyPointsArray[i]
                 };
-                teArray.push(teProjections);
+                const response = await request(getHost(), addProjection(
+                    te.firstName,
+                    te.lastName,
+                    te.team,
+                    te.completions,
+                    te.attempts,
+                    te.passTd,
+                    te.passYards,
+                    te.interception,
+                    te.carries,
+                    te.rushYards,
+                    te.rushTd,
+                    te.fumbles,
+                    te.receptions,
+                    te.receivingYards,
+                    te.receivingTd,
+                    te.fantasyPoints
+                )).catch(e => { console.error(e)});
             }
         }
     });
