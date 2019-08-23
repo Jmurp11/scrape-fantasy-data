@@ -66,6 +66,8 @@ export const qbProjections = () => {
 
             // [3] passYards
             data[3].forEach(element => {
+                element = element.toString();
+                element = element.replace(',', '');
                 passYardsArray.push(element);
             });
             passYardsArray.shift();
@@ -96,6 +98,8 @@ export const qbProjections = () => {
 
             // [7] rushYards
             data[7].forEach(element => {
+                element = element.toString();
+                element = element.replace(',', '');
                 if (!isNaN(element)) {
                     rushYardsArray.push(element);
                 }

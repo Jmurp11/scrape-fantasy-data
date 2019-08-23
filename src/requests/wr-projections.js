@@ -56,6 +56,8 @@ export const wrProjections = () => {
 
             // [2] rec yards
             data[2].forEach(element => {
+                element = element.toString();
+                element = element.replace(',', '');
                 recYardsArray.push(element);
             });
             recYardsArray.shift();
@@ -77,6 +79,8 @@ export const wrProjections = () => {
 
             // [5] rush yards
             data[5].forEach(element => {
+                element = element.toString();
+                element = element.replace(',', '');
                 if (!isNaN(element)) {
                     rushYardsArray.push(element);
                 }

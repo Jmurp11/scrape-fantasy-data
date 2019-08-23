@@ -2,7 +2,7 @@ import { rankings, qbProjections, rbProjections, wrProjections, teProjections, t
 
 //teams();
 //rankings();
-//qbProjections();
-//rbProjections();
-//wrProjections();
+qbProjections();
+rbProjections();
+wrProjections();
 teProjections();

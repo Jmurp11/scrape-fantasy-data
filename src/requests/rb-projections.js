@@ -57,7 +57,9 @@ export const rbProjections = () => {
 
             // [2] rush yards
             data[2].forEach(element => {
-                rushYardsArray.push(element);
+                element = element.toString();
+                element = element.replace(',', '');
+                rushYardsArray.push(parseInt(element, 10));
             });
             rushYardsArray.shift();
             rushYardsArray.shift();
@@ -78,8 +80,10 @@ export const rbProjections = () => {
 
             // [5] rec yards
             data[5].forEach(element => {
+                element = element.toString();
+                element = element.replace(',', '');
                 if (!isNaN(element)) {
-                    recYardsArray.push(element);
+                    recYardsArray.push(parseInt(element, 10));
                 }
             });
             recYardsArray.shift();
