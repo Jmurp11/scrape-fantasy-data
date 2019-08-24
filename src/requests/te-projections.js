@@ -54,6 +54,8 @@ export const teProjections = () => {
 
             // [2] rec yards
             data[2].forEach(element => {
+                element = element.toString();
+                element = element.replace(',', '');
                 recYardsArray.push(element);
             });
             recYardsArray.shift();
