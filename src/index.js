@@ -1,7 +1,7 @@
 import { rankings, qbProjections, rbProjections, wrProjections, teProjections, teams } from './requests';
 
 //teams();
-//rankings();
+// rankings();
 qbProjections();
 rbProjections();
 wrProjections();

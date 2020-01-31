@@ -39,19 +39,25 @@ export const createTeam = (
             netYardsPerPass: ${netYardsPerPass}, rushAttempt: ${rushAttempt},
             rushYards: ${rushYards}, rushTd: ${rushTd}, yardsPerRush: ${yardsPerRush},
             scorePercentage: ${scorePercentage}, turnoverPercentage: ${turnoverPercentage},
-            offensiveLineRank: ${offensiveLineRank}, runningBackSoS: ${runningBackSoS})
+            offensiveLineRank: ${offensiveLineRank}, runningBackSoS: ${runningBackSoS}) {
+                path
+                message
+            }
     }
 `;
     return mutation;
 };
 
 export const createPlayer = (firstName, lastName, team, position,
-    rank, tier) => {
+    rank, tier, adp) => {
     const mutation = `
         mutation {
             createPlayer(firstName: "${firstName}", lastName: "${lastName}", 
                 team: "${team}", position: "${position}", rank: ${parseInt(rank, 10)},
-                tier: "${tier}")
+                tier: "${tier}", adp: ${adp}) {
+                    path
+                    message
+                }
         }
     `;
     return mutation;
@@ -69,7 +75,10 @@ export const addProjection = (
                     passYards: ${parseFloat(passYards, 10)}, passTd: ${parseFloat(passTd, 10)}, 
                     interception: ${parseFloat(interception, 10)}, carries: ${parseFloat(carries, 10)}, rushYards: ${parseFloat(rushYards, 10)}, rushTd: ${parseFloat(rushTd, 10)}, 
                     fumbles: ${parseFloat(fumbles, 10)}, receptions: ${parseFloat(receptions, 10)}, receivingYards: ${parseFloat(receivingYards, 10)}, 
-                    receivingTd: ${parseFloat(receivingTd, 10)}, fantasyPoints: ${parseFloat(fantasyPoints, 10)})
+                    receivingTd: ${parseFloat(receivingTd, 10)}, fantasyPoints: ${parseFloat(fantasyPoints, 10)}) {
+                        path
+                        message
+                    }
             }
         `;
     return mutation;

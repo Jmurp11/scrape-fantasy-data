@@ -73,7 +73,8 @@ export const rankings = () => {
                 team: playerInfoArr[i].team,
                 position: playerInfoArr[i].position,
                 rank: rankArr[i].rank,
-                tier: rankArr[i].tier
+                tier: rankArr[i].tier,
+                adp: i
             };
             await request(getHost(), createPlayer(
                 player.firstName,
@@ -81,7 +82,8 @@ export const rankings = () => {
                 player.team,
                 player.position,
                 player.rank,
-                player.tier
+                player.tier,
+                player.adp
             )).catch(e => { console.error(e)});
         }
     });
