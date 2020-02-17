@@ -40,7 +40,6 @@ export const rankings = () => {
                     position,
                     team
                 };
-                console.log(`${player.firstName}${player.lastName}`);
                 if (player.firstName.length > 0) {
                     playerInfoArr.push(player);
                 }
@@ -73,6 +72,7 @@ export const rankings = () => {
                 team: playerInfoArr[i].team,
                 position: playerInfoArr[i].position,
                 rank: rankArr[i].rank,
+                adp: 1,
                 tier: rankArr[i].tier
             };
             await request(getHost(), createPlayer(
@@ -81,8 +81,9 @@ export const rankings = () => {
                 player.team,
                 player.position,
                 player.rank,
+                player.adp,
                 player.tier
-            )).catch(e => { console.error(e)});
+            )).catch(e => { console.error(e) });
         }
     });
 }

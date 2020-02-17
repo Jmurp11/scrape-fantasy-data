@@ -1,7 +1,7 @@
 import { request } from 'graphql-request';
 import { getHost } from '../constants';
 import { teamData } from '../team-data';
-import { createTeam } from '../queries';
+import { addTeamStats, createTeam, teamByAbbreviation } from '../queries';
 
 export const teams = () => {
     teamData.forEach(async (team) => {
@@ -9,8 +9,22 @@ export const teams = () => {
             team.city,
             team.nickname,
             team.abbreviation,
+            team.imageUrl
+        )).catch(e => { console.error(e) });
+
+        return response;
+    });
+}
+
+export const teamStats = () => {
+    teamData.forEach(async (team) => {
+        const teamId = await request(getHost(),
+            teamByAbbreviation(team.abbreviation)
+        );
+
+        const response = await request(getHost(), addTeamStats(
+            teamId.teamByAbbreviation.id,
             team.bye,
-            team.imageUrl,
             team.rank,
             team.passRank,
             team.rushRank,
@@ -33,8 +47,6 @@ export const teams = () => {
             team.turnoverPercentage,
             team.offensiveLineRank,
             team.runningBackSoS
-        )).catch(e => { console.error(e)});
-
-        return response;
+        )).catch(e => { console.error(e) });
     });
-}
+};
