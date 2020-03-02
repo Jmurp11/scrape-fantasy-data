@@ -75,15 +75,17 @@ export const rankings = () => {
                 adp: 1,
                 tier: rankArr[i].tier
             };
-            await request(getHost(), createPlayer(
-                player.firstName,
-                player.lastName,
-                player.team,
-                player.position,
-                player.rank,
-                player.adp,
-                player.tier
-            )).catch(e => { console.error(e) });
+            if (player.position !== 'DST' || player.position !== 'K') {
+                await request(getHost(), createPlayer(
+                    player.firstName,
+                    player.lastName,
+                    player.team,
+                    player.position,
+                    player.rank,
+                    player.adp,
+                    player.tier
+                )).catch(e => { console.error(e) });
+            }
         }
     });
 }

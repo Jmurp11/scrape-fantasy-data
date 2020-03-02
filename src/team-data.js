@@ -726,9 +726,9 @@ export const teamData = [
   },
   {
     "rank": 28,
-    "city": "Oakland",
+    "city": "Las Vegas",
     "nickname": "Raiders",
-    "abbreviation": "OAK",
+    "abbreviation": "LV",
     "bye": 6,
     "pointsFor": 290,
     "yards": 5379,
