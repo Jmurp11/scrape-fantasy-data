@@ -66,16 +66,16 @@ export const rankings = () => {
         }
 
         for (let i = 0; i < playerInfoArr.length; i++) {
-            const player = {
-                firstName: playerInfoArr[i].firstName,
-                lastName: playerInfoArr[i].lastName,
-                team: playerInfoArr[i].team,
-                position: playerInfoArr[i].position,
-                rank: rankArr[i].rank,
-                adp: 1,
-                tier: rankArr[i].tier
-            };
-            if (player.position !== 'DST' || player.position !== 'K') {
+            if (playerInfoArr[i].position !== 'DST' || playerInfoArr[i].position !== 'K') {
+                const player = {
+                    firstName: playerInfoArr[i].firstName,
+                    lastName: playerInfoArr[i].lastName,
+                    team: playerInfoArr[i].team,
+                    position: playerInfoArr[i].position,
+                    rank: rankArr[i].rank,
+                    adp: 1,
+                    tier: rankArr[i].tier
+                };
                 await request(getHost(), createPlayer(
                     player.firstName,
                     player.lastName,

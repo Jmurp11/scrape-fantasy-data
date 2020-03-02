@@ -3,8 +3,8 @@ import { teamStats } from './requests/team';
 
 // teams();
 // teamStats();
-// rankings();
-qbProjections();
-rbProjections();
-wrProjections();
-teProjections();
+rankings();
+// qbProjections();
+// rbProjections();
+// wrProjections();
+// teProjections();
