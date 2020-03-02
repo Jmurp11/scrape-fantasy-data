@@ -66,7 +66,7 @@ export const rankings = () => {
         }
 
         for (let i = 0; i < playerInfoArr.length; i++) {
-            if (playerInfoArr[i].position !== 'DST' || playerInfoArr[i].position !== 'K') {
+            if (playerInfoArr[i].position !== 'DST' && playerInfoArr[i].position !== 'K') {
                 const player = {
                     firstName: playerInfoArr[i].firstName,
                     lastName: playerInfoArr[i].lastName,

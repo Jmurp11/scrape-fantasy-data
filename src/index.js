@@ -1,9 +1,9 @@
 import { rankings, qbProjections, rbProjections, wrProjections, teProjections, teams } from './requests';
 import { teamStats } from './requests/team';
 
-// teams();
+teams();
 // teamStats();
-rankings();
+// rankings();
 // qbProjections();
 // rbProjections();
 // wrProjections();
