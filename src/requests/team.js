@@ -6,6 +6,7 @@ import { addTeamStats, createTeam, teamByAbbreviation } from '../queries';
 export const teams = () => {
     teamData.forEach(async (team) => {
         const response = await request(getHost(), createTeam(
+            team.id,
             team.city,
             team.nickname,
             team.abbreviation,
@@ -18,12 +19,9 @@ export const teams = () => {
 
 export const teamStats = () => {
     teamData.forEach(async (team) => {
-        const teamId = await request(getHost(),
-            teamByAbbreviation(team.abbreviation)
-        );
 
         const response = await request(getHost(), addTeamStats(
-            teamId.teamByAbbreviation.id,
+            team.id,
             team.bye,
             team.rank,
             team.passRank,

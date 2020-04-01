@@ -1,4 +1,5 @@
 export const createTeam = (
+    id,
     city,
     nickname,
     abbreviation,
@@ -7,6 +8,7 @@ export const createTeam = (
     return `
         mutation {
             createTeam(input: {
+                id: ${id},
                 city:"${city}",
                 nickname:"${nickname}",
                 abbreviation:"${abbreviation}",
@@ -74,11 +76,11 @@ export const addTeamStats = (
     `;
 };
 
-export const createPlayer = (firstName, lastName, team, position,
+export const createDefaultRank = (firstName, lastName, team, position,
     rank, adp, tier) => {
     return `
         mutation {
-            createPlayer(input: {
+            createDefaultRank(input: {
                 firstName: "${firstName}", lastName: "${lastName}", 
                 team: "${team}", position: "${position}", rank: ${parseInt(rank, 10)},
                 adp: ${adp}, tier: "${tier}"

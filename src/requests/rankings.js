@@ -1,6 +1,6 @@
 import { request } from 'graphql-request';
 import { scrapeRequest, cheerio, tableParser, getHost } from '../constants';
-import { createPlayer } from '../queries';
+import { createDefaultRank } from '../queries';
 
 const options = {
     url: 'https://www.fantasypros.com/nfl/rankings/half-point-ppr-cheatsheets.php'
@@ -76,7 +76,8 @@ export const rankings = () => {
                     adp: 1,
                     tier: rankArr[i].tier
                 };
-                await request(getHost(), createPlayer(
+
+                await request(getHost(), createDefaultRank(
                     player.firstName,
                     player.lastName,
                     player.team,
